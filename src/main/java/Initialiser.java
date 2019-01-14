@@ -1,18 +1,32 @@
 import org.openqa.selenium.WebDriver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Initialiser {
     public static void main(String[] args) {
         String baseUrl = "http://demo.guru99.com/test/newtours/";
         String expectedTitle = "Welcome: Mercury Tours";
         String actualTitle;
 
-        WebDriver firefox = InitBrowser.openFirefox(false);
-        firefox.get(baseUrl);
-        actualTitle = firefox.getTitle();
+        List<WebDriver> browsers = new ArrayList<>();
 
-        if (actualTitle.contentEquals(expectedTitle)) System.out.println("Passed");
-        else System.out.println("Failed");
+        WebDriver firefox = InitBrowser.openFirefox(true);
+        WebDriver chrome = InitBrowser.openChrome(true);
+        WebDriver msedge = InitBrowser.openMSEdge();
 
-        firefox.close();
+        browsers.add(firefox);
+        browsers.add(chrome);
+        browsers.add(msedge);
+
+        for (WebDriver browser : browsers) {
+            browser.get(baseUrl);
+            actualTitle = browser.getTitle();
+
+            if (actualTitle.contentEquals(expectedTitle)) System.out.println(browser.toString() + ": PASSED");
+            else System.out.println(browser.toString() + ": Failed");
+
+            browser.close();
+        }
     }
 }
