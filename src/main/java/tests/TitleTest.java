@@ -22,15 +22,15 @@ public class TitleTest {
         this.browser = browser;
     }
 
+    @Parameterized.Parameters
+    public static Collection browsers() {
+        return InitBrowser.initialiseBrowsers();
+    }
+
     @Before
     public void setup() {
         baseUrl = "http://demo.guru99.com/test/newtours/";
         expectedTitle = "Welcome: Mercury Tours";
-    }
-
-    @Parameterized.Parameters
-    public static Collection browsers() {
-        return InitBrowser.initialiseBrowsers();
     }
 
     @Test
